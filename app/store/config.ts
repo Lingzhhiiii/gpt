@@ -111,7 +111,6 @@ export const useAppConfig = createPersistStore(
 
       const oldModels = get().models;
       const modelMap: Record<string, LLMModel> = {};
-
       for (const model of oldModels) {
         model.available = false;
         modelMap[model.name] = model;
@@ -132,7 +131,6 @@ export const useAppConfig = createPersistStore(
         .customModels.split(",")
         .filter((v) => !!v && v.length > 0)
         .map((m) => ({ name: m, available: true }));
-
       const models = get().models.concat(customModels);
       return models;
     },

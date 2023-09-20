@@ -23,7 +23,7 @@ export type { LocaleType, PartialLocaleType } from "./cn";
 const ALL_LANGS = {
   cn,
   en,
-  tw,
+  /*tw,
   jp,
   ko,
   id,
@@ -37,7 +37,7 @@ const ALL_LANGS = {
   cs,
   no,
   ar,
-  bn,
+  bn,*/
 };
 
 export type Lang = keyof typeof ALL_LANGS;
@@ -47,7 +47,7 @@ export const AllLangs = Object.keys(ALL_LANGS) as Lang[];
 export const ALL_LANG_OPTIONS: Record<Lang, string> = {
   cn: "简体中文",
   en: "English",
-  tw: "繁體中文",
+  /*tw: "繁體中文",
   jp: "日本語",
   ko: "한국어",
   id: "Indonesia",
@@ -61,7 +61,7 @@ export const ALL_LANG_OPTIONS: Record<Lang, string> = {
   cs: "Čeština",
   no: "Nynorsk",
   ar: "العربية",
-  bn: "বাংলা",
+  bn: "বাংলা",*/
 };
 
 const LANG_KEY = "lang";

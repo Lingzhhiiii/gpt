@@ -448,20 +448,20 @@ export function MaskPage() {
 
           <div className="window-actions">
             <div className="window-action-button">
-              <IconButton
+              {/* <IconButton
                 icon={<DownloadIcon />}
                 bordered
                 onClick={downloadAll}
                 text={Locale.UI.Export}
-              />
+              /> */}
             </div>
             <div className="window-action-button">
-              <IconButton
+              {/* <IconButton
                 icon={<UploadIcon />}
                 text={Locale.UI.Import}
                 bordered
                 onClick={() => importFromFile()}
-              />
+              /> */}
             </div>
             <div className="window-action-button">
               <IconButton
@@ -504,7 +504,7 @@ export function MaskPage() {
               ))}
             </Select>
 
-            <IconButton
+            {/* <IconButton
               className={styles["mask-create"]}
               icon={<AddIcon />}
               text={Locale.Mask.Page.Create}
@@ -513,7 +513,7 @@ export function MaskPage() {
                 const createdMask = maskStore.create();
                 setEditingMaskId(createdMask.id);
               }}
-            />
+            /> */}
           </div>
 
           <div>
