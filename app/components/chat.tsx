@@ -90,6 +90,8 @@ import { prettyObject } from "../utils/format";
 import { ExportMessageModal } from "./exporter";
 import { getClientConfig } from "../config/client";
 
+import { containsSensitiveWords } from "../utils/sensitiveWordsController";
+
 const Markdown = dynamic(async () => (await import("./markdown")).Markdown, {
   loading: () => <LoadingIcon />,
 });
@@ -480,11 +482,11 @@ export function ChatActions(props: {
         }
       />
 
-      <ChatAction
+      {/* <ChatAction
         onClick={props.showPromptHints}
         text={Locale.Chat.InputActions.Prompt}
         icon={<PromptIcon />}
-      />
+      /> */}
 
       <ChatAction
         onClick={() => {
@@ -509,11 +511,11 @@ export function ChatActions(props: {
         }}
       />
 
-      <ChatAction
+      {/* <ChatAction
         onClick={() => setShowModelSelector(true)}
         text={currentModel}
         icon={<RobotIcon />}
-      />
+      /> */}
 
       {showModelSelector && (
         <Selector
@@ -668,6 +670,7 @@ function _Chat() {
   const SEARCH_TEXT_LIMIT = 30;
   const onInput = (text: string) => {
     setUserInput(text);
+
     const n = text.trim().length;
 
     // clear search results
@@ -685,7 +688,13 @@ function _Chat() {
   };
 
   const doSubmit = (userInput: string) => {
+    if (containsSensitiveWords(userInput)) {
+      alert("消息包含敏感词汇，请修改后重新发送。");
+      return;
+    }
+
     if (userInput.trim() === "") return;
+
     const matchCommand = chatCommands.match(userInput);
     if (matchCommand.matched) {
       setUserInput("");
