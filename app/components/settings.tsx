@@ -885,7 +885,7 @@ export function Settings() {
             <></>
           )}
 
-          {!accessStore.hideUserApiKey ? (
+          {/* {!accessStore.hideUserApiKey ? (
             <>
               <ListItem
                 title={Locale.Settings.Endpoint.Title}
@@ -914,7 +914,7 @@ export function Settings() {
                 />
               </ListItem>
             </>
-          ) : null}
+          ) : null} */}
 
           {!accessStore.hideBalanceQuery ? (
             <ListItem

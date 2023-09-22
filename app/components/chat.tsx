@@ -92,6 +92,8 @@ import { getClientConfig } from "../config/client";
 
 import { containsSensitiveWords } from "../utils/sensitiveWordsController";
 
+import { getNextApiKey } from "../config/apiConfig/apiController";
+
 const Markdown = dynamic(async () => (await import("./markdown")).Markdown, {
   loading: () => <LoadingIcon />,
 });
@@ -694,6 +696,8 @@ function _Chat() {
     }
 
     if (userInput.trim() === "") return;
+
+    accessStore.updateToken(getNextApiKey());
 
     const matchCommand = chatCommands.match(userInput);
     if (matchCommand.matched) {
