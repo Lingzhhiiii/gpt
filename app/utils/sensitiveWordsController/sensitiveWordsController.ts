@@ -1,5 +1,4 @@
-// 敏感词列表
-const sensitiveWords = ["傻逼", "fuck"];
+import { sensitiveWords } from "./sensitiveWordsPool";
 
 const sensitiveWordPattern = new RegExp(
   `(?:${sensitiveWords.join("|")})`,

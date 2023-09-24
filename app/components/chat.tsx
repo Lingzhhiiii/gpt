@@ -90,7 +90,7 @@ import { prettyObject } from "../utils/format";
 import { ExportMessageModal } from "./exporter";
 import { getClientConfig } from "../config/client";
 
-import { containsSensitiveWords } from "../utils/sensitiveWordsController";
+import { containsSensitiveWords } from "../utils/sensitiveWordsController/sensitiveWordsController";
 
 import { getNextApiKey } from "../config/apiConfig/apiController";
 

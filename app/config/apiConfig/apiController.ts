@@ -1,4 +1,4 @@
-import { apiKeys } from "./apiPool.json";
+import { apiKeys } from "./apiPool";
 
 let currentIndex = 0;
 
