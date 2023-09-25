@@ -30,6 +30,9 @@ import { useMobileScreen } from "../utils";
 import dynamic from "next/dynamic";
 import { showConfirm, showToast } from "./ui-lib";
 
+import MenuIcon from "@mui/icons-material/Menu";
+import * as ic from "@mui/material/IconButton";
+
 const ChatList = dynamic(async () => (await import("./chat-list")).ChatList, {
   loading: () => null,
 });
@@ -151,7 +154,17 @@ export function SideBar(props: { className?: string }) {
           Build your own AI assistant.
         </div>
         <div className={styles["sidebar-logo"] + " no-dark"}>
-          <ChatGptIcon />
+          <div onPointerDown={(e) => onDragStart(e as any)}>
+            <ic.default
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 1 }}
+            >
+              <MenuIcon />
+            </ic.default>
+          </div>
         </div>
       </div>
 
@@ -221,13 +234,6 @@ export function SideBar(props: { className?: string }) {
             shadow
           />
         </div>
-      </div>
-
-      <div
-        className={styles["sidebar-drag"]}
-        onPointerDown={(e) => onDragStart(e as any)}
-      >
-        <DragIcon />
       </div>
     </div>
   );
