@@ -75,6 +75,7 @@ import {
   showConfirm,
   showPrompt,
   showToast,
+  ShowStart,
 } from "./ui-lib";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
@@ -96,6 +97,10 @@ import { getClientConfig } from "../config/client";
 import { containsSensitiveWords } from "../utils/sensitiveWordsController/sensitiveWordsController";
 
 import { getNextApiKey } from "../config/apiConfig/apiController";
+
+import { Box, Paper } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import sty from "./showStart.scss";
 
 const Markdown = dynamic(async () => (await import("./markdown")).Markdown, {
   loading: () => <LoadingIcon />,
@@ -925,17 +930,16 @@ function _Chat() {
     return session.mask.hideContext ? [] : session.mask.context.slice();
   }, [session.mask.context, session.mask.hideContext]);
   const accessStore = useAccessStore();
-
-  if (
-    context.length === 0 &&
-    session.messages.at(0)?.content !== BOT_HELLO.content
-  ) {
-    const copiedHello = Object.assign({}, BOT_HELLO);
-    if (!accessStore.isAuthorized()) {
-      copiedHello.content = Locale.Error.Unauthorized;
-    }
-    context.push(copiedHello);
-  }
+  // if (
+  //   context.length === 0 &&
+  //   session.messages.at(0)?.content !== BOT_HELLO.content
+  // ) {
+  //   const copiedHello = Object.assign({}, BOT_HELLO);
+  //   if (!accessStore.isAuthorized()) {
+  //     copiedHello.content = Locale.Error.Unauthorized;
+  //   }
+  //   context.push(copiedHello);
+  // }
 
   // preview messages
   const renderMessages = useMemo(() => {
@@ -1093,7 +1097,7 @@ function _Chat() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  console.log(context.length);
   return (
     <div className={styles.chat} key={session.id}>
       <div className="window-header" data-tauri-drag-region>
@@ -1101,7 +1105,7 @@ function _Chat() {
           <div className="window-actions">
             <div className={"window-action-button"}>
               <IconButton
-                icon={<ReturnIcon />}
+                icon={<MenuIcon />}
                 bordered
                 title={Locale.Chat.Actions.ChatList}
                 onClick={() => navigate(Path.Home)}
@@ -1173,6 +1177,8 @@ function _Chat() {
           setAutoScroll(false);
         }}
       >
+        {context.length === 0 && <ShowStart />}
+
         {messages.map((message, i) => {
           const isUser = message.role === "user";
           const isContext = i < context.length;

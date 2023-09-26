@@ -15,6 +15,9 @@ import Locale from "../locales";
 import { createRoot } from "react-dom/client";
 import React, { HTMLProps, useEffect, useState } from "react";
 import { IconButton } from "./button";
+import exp from "constants";
+
+import { Box, Paper } from "@mui/material";
 
 export function Popover(props: {
   children: JSX.Element;
@@ -483,5 +486,46 @@ export function Selector<T>(props: {
         </List>
       </div>
     </div>
+  );
+}
+
+export function ShowStart() {
+  const paper = {
+    height: 60,
+    textAlign: "center",
+    fontSize: "small",
+    p: 1,
+    bgcolor: "#DCDCDC",
+  } as const;
+  return (
+    <>
+      <h2 className={styles.title}>ChatGPT Next</h2>
+      <div className={styles.parent}>
+        <div className={styles.div1}>
+          <h4>工作</h4>
+        </div>
+        <div className={styles.div3}>
+          <h4>生活</h4>
+        </div>
+        <div className={styles.div5}>
+          <h4>美食</h4>
+        </div>
+        <div className={styles.div2}>
+          <Paper elevation={3} sx={paper}>
+            写客户商务洽谈会议纪要，详细。
+          </Paper>
+        </div>
+        <div className={styles.div4}>
+          <Paper elevation={3} sx={paper}>
+            做去北京旅游的五天详细旅游攻略。
+          </Paper>
+        </div>
+        <div className={styles.div6}>
+          <Paper elevation={3} sx={paper}>
+            怎么做偏辣口味的炖牛肉？需要详细步骤。
+          </Paper>
+        </div>
+      </div>
+    </>
   );
 }
