@@ -366,7 +366,6 @@
   background-color: var(--color-canvas-subtle);
   border: solid 1px var(--color-neutral-muted);
   border-bottom-color: var(--color-neutral-muted);
-  border-radius: 6px;
   box-shadow: inset 0 -1px 0 var(--color-neutral-muted);
 }
 
@@ -799,7 +798,6 @@
   font-size: 85%;
   white-space: break-spaces;
   background-color: var(--color-neutral-muted);
-  border-radius: 6px;
 }
 
 .markdown-body code br,
@@ -843,7 +841,6 @@
   overflow: auto;
   font-size: 85%;
   line-height: 1.45;
-  border-radius: 6px;
   direction: ltr;
 }
 
@@ -924,7 +921,6 @@
   pointer-events: none;
   content: "";
   border: 2px solid var(--color-accent-emphasis);
-  border-radius: 6px;
 }
 
 .markdown-body .footnotes li:target {
@@ -1122,7 +1118,6 @@
 .markdown-body .mermaid {
   border: var(--border-in-light);
   margin-bottom: 10px;
-  border-radius: 4px;
   padding: 10px;
   background-color: var(--white);
 }

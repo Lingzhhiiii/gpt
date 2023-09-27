@@ -474,7 +474,6 @@ export function Selector<T>(props: {
                       height: 10,
                       width: 10,
                       backgroundColor: "var(--primary)",
-                      borderRadius: 10,
                     }}
                   ></div>
                 ) : (
@@ -496,6 +495,8 @@ export function ShowStart() {
     fontSize: "small",
     p: 1,
     bgcolor: "#DCDCDC",
+    borderRadius: 0,
+    overflow: "auto",
   } as const;
   return (
     <>
@@ -511,17 +512,17 @@ export function ShowStart() {
           <h4>美食</h4>
         </div>
         <div className={styles.div2}>
-          <Paper elevation={3} sx={paper}>
+          <Paper elevation={0} sx={paper}>
             写客户商务洽谈会议纪要，详细。
           </Paper>
         </div>
         <div className={styles.div4}>
-          <Paper elevation={3} sx={paper}>
+          <Paper elevation={0} sx={paper}>
             做去北京旅游的五天详细旅游攻略。
           </Paper>
         </div>
         <div className={styles.div6}>
-          <Paper elevation={3} sx={paper}>
+          <Paper elevation={0} sx={paper}>
             怎么做偏辣口味的炖牛肉？需要详细步骤。
           </Paper>
         </div>

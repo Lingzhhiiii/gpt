@@ -11,7 +11,6 @@
 
 .steps {
   background-color: var(--gray);
-  border-radius: 10px;
   overflow: hidden;
   padding: 5px;
   position: relative;
@@ -35,7 +34,6 @@
       height: 100%;
       background-color: var(--white);
       transition: all ease 0.3s;
-      border-radius: 8px;
     }
   }
 
@@ -72,7 +70,6 @@
       .step-index {
         background-color: var(--gray);
         border: var(--border-in-light);
-        border-radius: 6px;
         display: inline-block;
         padding: 0px 5px;
         font-size: 12px;
@@ -102,7 +99,6 @@
 
 .image-previewer {
   .preview-body {
-    border-radius: 10px;
     padding: 20px;
     box-shadow: var(--card-shadow) inset;
     background-color: var(--gray);
@@ -110,7 +106,6 @@
     .chat-info {
       background-color: var(--second);
       padding: 20px;
-      border-radius: 10px;
       margin-bottom: 20px;
       display: flex;
       justify-content: space-between;
@@ -161,7 +156,6 @@
         font-size: 12px;
         color: var(--primary);
         padding: 2px 15px;
-        border-radius: 10px;
         background-color: var(--white);
         box-shadow: var(--card-shadow);
 
@@ -180,7 +174,6 @@
       }
 
       .body {
-        border-radius: 10px;
         padding: 8px 10px;
         max-width: calc(100% - 104px);
         box-shadow: var(--card-shadow);

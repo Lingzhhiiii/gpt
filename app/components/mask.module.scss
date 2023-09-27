@@ -14,13 +14,13 @@
       margin-bottom: 20px;
       animation: slide-in ease 0.3s;
       height: 40px;
-
       display: flex;
 
       .search-bar {
         flex-grow: 1;
         max-width: 100%;
         min-width: 0;
+
       }
 
       .mask-filter-lang {
@@ -89,7 +89,6 @@
         display: flex;
         flex-direction: column;
         padding-bottom: 10px;
-        border-radius: 10px;
         margin-bottom: 20px;
         box-shadow: var(--card-shadow);
 

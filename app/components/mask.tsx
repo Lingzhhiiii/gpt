@@ -53,6 +53,7 @@ import {
 import Box from "@mui/material/Box";
 import * as Li from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
+import * as LiIt from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
@@ -400,6 +401,10 @@ export function MaskPage() {
 
   const [searchMasks, setSearchMasks] = useState<Mask[]>([]);
   const [searchText, setSearchText] = useState("");
+
+  const [selectedIndex, setSelectedIndex] = useState(1);
+  const [selectedSortMasks, setSelectedSortMasks] = useState<Mask[]>([]);
+
   const masks = searchText.length > 0 ? searchMasks : allMasks;
 
   // simple search, will refactor later
@@ -440,6 +445,83 @@ export function MaskPage() {
         }
       } catch {}
     });
+  };
+
+  const MaskSidebar = () => {
+    const sort = [
+      {
+        name: "全部",
+        index: 1,
+      },
+      {
+        name: "效率工具",
+        index: 2,
+      },
+      {
+        name: "写作辅助",
+        index: 3,
+      },
+      {
+        name: "文章/故事",
+        index: 4,
+      },
+      {
+        name: "文本/词语",
+        index: 5,
+      },
+      {
+        name: "发散思维",
+        index: 6,
+      },
+      {
+        name: "编程开发",
+        index: 7,
+      },
+      {
+        name: "点评/评鉴",
+        index: 8,
+      },
+      {
+        name: "知识百科",
+        index: 9,
+      },
+      {
+        name: "趣味知识",
+        index: 10,
+      },
+      {
+        name: "语言/翻译",
+        index: 11,
+      },
+    ];
+
+    return (
+      <Box
+        sx={{
+          width: "100%",
+          maxWidth: 360,
+          bgcolor: "background.paper",
+          position: "sticky",
+          top: 0,
+        }}
+      >
+        <Li.default
+          component="nav"
+          aria-label="secondary mailbox folder"
+          sx={{ overflowY: "auto" }}
+        >
+          {sort.map((item, index: number) => (
+            <ListItemButton
+              key={index}
+              selected={selectedIndex === item.index}
+              onClick={() => setSelectedIndex(item.index)}
+            >
+              <ListItemText primary={item.name} />
+            </ListItemButton>
+          ))}
+        </Li.default>
+      </Box>
+    );
   };
 
   return (
@@ -529,59 +611,63 @@ export function MaskPage() {
               <MaskSidebar />
             </div>
             <div className={styles.div2}>
-              {masks.map((m) => (
-                <div className={styles["mask-item"]} key={m.id}>
-                  <div className={styles["mask-header"]}>
-                    <div className={styles["mask-icon"]}>
-                      <MaskAvatar mask={m} />
-                    </div>
-                    <div className={styles["mask-title"]}>
-                      <div className={styles["mask-name"]}>{m.name}</div>
-                      <div className={styles["mask-info"] + " one-line"}>
-                        {`${Locale.Mask.Item.Info(m.context.length)} / ${
-                          ALL_LANG_OPTIONS[m.lang]
-                        } / ${m.modelConfig.model}`}
+              {masks
+                .filter(
+                  (m) => m.sortId === selectedIndex || selectedIndex === 1,
+                )
+                .map((m) => (
+                  <div className={styles["mask-item"]} key={m.id}>
+                    <div className={styles["mask-header"]}>
+                      <div className={styles["mask-icon"]}>
+                        <MaskAvatar mask={m} />
+                      </div>
+                      <div className={styles["mask-title"]}>
+                        <div className={styles["mask-name"]}>{m.name}</div>
+                        <div className={styles["mask-info"] + " one-line"}>
+                          {`${Locale.Mask.Item.Info(m.context.length)} / ${
+                            ALL_LANG_OPTIONS[m.lang]
+                          } / ${m.modelConfig.model}`}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className={styles["mask-actions"]}>
-                    <IconButton
-                      icon={<AddIcon />}
-                      text={Locale.Mask.Item.Chat}
-                      onClick={() => {
-                        chatStore.newSession(m);
-                        navigate(Path.Chat);
-                      }}
-                    />
-                    {m.builtin ? (
+                    <div className={styles["mask-actions"]}>
                       <IconButton
-                        icon={<EyeIcon />}
-                        text={Locale.Mask.Item.View}
-                        onClick={() => setEditingMaskId(m.id)}
-                      />
-                    ) : (
-                      <IconButton
-                        icon={<EditIcon />}
-                        text={Locale.Mask.Item.Edit}
-                        onClick={() => setEditingMaskId(m.id)}
-                      />
-                    )}
-                    {!m.builtin && (
-                      <IconButton
-                        icon={<DeleteIcon />}
-                        text={Locale.Mask.Item.Delete}
-                        onClick={async () => {
-                          if (
-                            await showConfirm(Locale.Mask.Item.DeleteConfirm)
-                          ) {
-                            maskStore.delete(m.id);
-                          }
+                        icon={<AddIcon />}
+                        text={Locale.Mask.Item.Chat}
+                        onClick={() => {
+                          chatStore.newSession(m);
+                          navigate(Path.Chat);
                         }}
                       />
-                    )}
+                      {m.builtin ? (
+                        <IconButton
+                          icon={<EyeIcon />}
+                          text={Locale.Mask.Item.View}
+                          onClick={() => setEditingMaskId(m.id)}
+                        />
+                      ) : (
+                        <IconButton
+                          icon={<EditIcon />}
+                          text={Locale.Mask.Item.Edit}
+                          onClick={() => setEditingMaskId(m.id)}
+                        />
+                      )}
+                      {!m.builtin && (
+                        <IconButton
+                          icon={<DeleteIcon />}
+                          text={Locale.Mask.Item.Delete}
+                          onClick={async () => {
+                            if (
+                              await showConfirm(Locale.Mask.Item.DeleteConfirm)
+                            ) {
+                              maskStore.delete(m.id);
+                            }
+                          }}
+                        />
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </div>
           </div>
         </div>
@@ -631,78 +717,3 @@ export function MaskPage() {
     </ErrorBoundary>
   );
 }
-const MaskSidebar = () => {
-  const [selectedIndex, setSelectedIndex] = useState(1);
-
-  const sort = [
-    {
-      name: "全部",
-      index: 1,
-    },
-    {
-      name: "效率工具",
-      index: 2,
-    },
-    {
-      name: "写作辅助",
-      index: 3,
-    },
-    {
-      name: "文章/故事",
-      index: 4,
-    },
-    {
-      name: "文本/词语",
-      index: 5,
-    },
-    {
-      name: "发散思维",
-      index: 6,
-    },
-    {
-      name: "编程开发",
-      index: 7,
-    },
-    {
-      name: "点评/评鉴",
-      index: 8,
-    },
-    {
-      name: "知识百科",
-      index: 9,
-    },
-    {
-      name: "趣味知识",
-      index: 10,
-    },
-    {
-      name: "语言/翻译",
-      index: 11,
-    },
-  ];
-
-  const handleListItemClick = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    index: number,
-  ) => {
-    setSelectedIndex(index);
-  };
-  return (
-    <Box sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
-      <Li.default component="nav" aria-label="secondary mailbox folder">
-        <ListItemButton
-          selected={selectedIndex === 1}
-          onClick={(event) => handleListItemClick(event, 1)}
-        >
-          <ListItemText primary="全部" />
-        </ListItemButton>
-        <ListItemButton
-          selected={selectedIndex === 2}
-          onClick={(event) => handleListItemClick(event, 2)}
-        >
-          <ListItemText primary="效率工具" />
-        </ListItemButton>
-      </Li.default>
-    </Box>
-  );
-};
