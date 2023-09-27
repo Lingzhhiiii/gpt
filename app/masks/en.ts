@@ -26,6 +26,7 @@ export const EN_MASKS: BuiltinMask[] = [
     lang: "en",
     builtin: true,
     createdAt: 1688899480410,
+    sortId: 7,
   },
   {
     avatar: "1f916",
@@ -72,6 +73,7 @@ export const EN_MASKS: BuiltinMask[] = [
     lang: "en",
     builtin: true,
     createdAt: 1688899480411,
+    sortId: 2,
   },
   {
     avatar: "2328-fe0f",
@@ -98,6 +100,7 @@ export const EN_MASKS: BuiltinMask[] = [
     lang: "en",
     builtin: true,
     createdAt: 1688899480412,
+    sortId: 7,
   },
   {
     avatar: "1f60e",
@@ -130,5 +133,6 @@ export const EN_MASKS: BuiltinMask[] = [
     lang: "en",
     builtin: true,
     createdAt: 1688899480413,
+    sortId: 10,
   },
 ];
