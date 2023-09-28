@@ -1,4 +1,6 @@
 import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Path, SlotID } from "./constant";
 
 interface responseData {
   data: {
@@ -7,13 +9,20 @@ interface responseData {
   };
   result: string;
 }
-
+interface InterceptorProps {
+  doSubmit: (userInput: string) => void;
+}
+// : React.FC<InterceptorProps>
 const Interceptor = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const token = new URLSearchParams(window.location.search).get("token");
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const jwt = {
-          token: "token",
+          token: token,
         };
         // client端在这里附上token
         const response = await fetch("http://tools.youren.online/jwt/", {
@@ -28,24 +37,23 @@ const Interceptor = () => {
           const data: responseData = await response.json();
           if (data.result === "success") {
             console.log("[success]: " + data.result);
-            // 用户token通过，予以放行
           } else {
             console.log("[fail]: " + data.result);
-            // token不通过
+            alert("您没有相应权限");
+            navigate(Path.AuthFail);
           }
         } else {
           console.log("response: ", response);
-          // 网络异常
+          navigate(Path.AuthFail);
         }
       } catch (error) {
         console.log("error: " + error);
-        // 处理其他异常
+        navigate(Path.AuthFail);
       }
     };
 
     fetchData();
-  }, []); // 只在组件加载时执行一次
-
+  }, [token]);
   return null;
 };
 

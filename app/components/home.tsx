@@ -31,6 +31,7 @@ import { api } from "../client/api";
 import { useAccessStore } from "../store";
 
 import Interceptor from "../Interceptor";
+import AuthFail from "./authfail";
 
 export function Loading(props: { noLogo?: boolean }) {
   return (
@@ -161,6 +162,7 @@ function Screen() {
               <Route path={Path.Masks} element={<MaskPage />} />
               <Route path={Path.Chat} element={<Chat />} />
               <Route path={Path.Settings} element={<Settings />} />
+              <Route path={Path.AuthFail} element={<AuthFail />} />
             </Routes>
           </div>
         </>
@@ -198,6 +200,7 @@ export function Home() {
   return (
     <ErrorBoundary>
       <Router>
+        {/* <Interceptor /> */}
         <Screen />
       </Router>
     </ErrorBoundary>

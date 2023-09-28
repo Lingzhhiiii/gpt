@@ -66,6 +66,7 @@ import Locale from "../locales";
 
 import { IconButton } from "./button";
 import styles from "./chat.module.scss";
+import Interceptor from "../Interceptor";
 
 import {
   List,
@@ -101,6 +102,7 @@ import { getNextApiKey } from "../config/apiConfig/apiController";
 import { Box, Paper } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import sty from "./showStart.scss";
+import { BottomNav } from "./BottomNav";
 
 const Markdown = dynamic(async () => (await import("./markdown")).Markdown, {
   loading: () => <LoadingIcon />,
@@ -337,7 +339,7 @@ function ClearContextDivider() {
   );
 }
 
-function ChatAction(props: {
+export function ChatAction(props: {
   text: string;
   icon?: JSX.Element;
   onClick: () => void;
@@ -547,50 +549,8 @@ export function ChatActions(props: {
           />
         )}
       </div>
-      <div>
-        <BottomNavigation>
-          <BottomNavigationAction
-            icon={
-              props.hitBottom && (
-                <ChatAction
-                  onClick={props.showPromptModal}
-                  text={Locale.Chat.InputActions.Settings}
-                  icon={<SettingsIcon />}
-                />
-              )
-            }
-          />
-          <BottomNavigationAction
-            icon={
-              <ChatAction
-                text={Locale.Chat.InputActions.Masks}
-                icon={<MaskIcon />}
-                onClick={() => {
-                  navigate(Path.Masks);
-                }}
-              />
-            }
-          />
-          <BottomNavigationAction
-            icon={
-              <ChatAction
-                text={Locale.Chat.InputActions.Clear}
-                icon={<BreakIcon />}
-                onClick={() => {
-                  chatStore.updateCurrentSession((session) => {
-                    if (session.clearContextIndex === session.messages.length) {
-                      session.clearContextIndex = undefined;
-                    } else {
-                      session.clearContextIndex = session.messages.length;
-                      session.memoryPrompt = ""; // will clear memory
-                    }
-                  });
-                }}
-              />
-            }
-          />
-        </BottomNavigation>
-      </div>
+      <BottomNav />
+      {/* */}
     </div>
   );
 }
@@ -1134,7 +1094,7 @@ function _Chat() {
               />
             </div>
           )}
-          <div className="window-action-button">
+          {/* <div className="window-action-button">
             <IconButton
               icon={<ExportIcon />}
               bordered
@@ -1143,7 +1103,7 @@ function _Chat() {
                 setShowExport(true);
               }}
             />
-          </div>
+          </div> */}
           {showMaxIcon && (
             <div className="window-action-button">
               <IconButton
@@ -1303,6 +1263,7 @@ function _Chat() {
       </div>
 
       <div className={styles["chat-input-panel"]}>
+        {/* <Interceptor /> */}
         <PromptHints prompts={promptHints} onPromptSelect={onPromptSelect} />
         <div className={styles["chat-input-panel-inner"]}>
           <textarea

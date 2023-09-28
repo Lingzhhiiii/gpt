@@ -59,6 +59,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import InboxIcon from "@mui/icons-material/Inbox";
 import DraftsIcon from "@mui/icons-material/Drafts";
+import { BottomNav } from "./BottomNav";
 
 // drag and drop helper function
 function reorder<T>(list: T[], startIndex: number, endIndex: number): T[] {
@@ -624,9 +625,9 @@ export function MaskPage() {
                       <div className={styles["mask-title"]}>
                         <div className={styles["mask-name"]}>{m.name}</div>
                         <div className={styles["mask-info"] + " one-line"}>
-                          {`${Locale.Mask.Item.Info(m.context.length)} / ${
+                          {/* {`${Locale.Mask.Item.Info(m.context.length)} / ${
                             ALL_LANG_OPTIONS[m.lang]
-                          } / ${m.modelConfig.model}`}
+                          } / ${m.modelConfig.model}`} */}
                         </div>
                       </div>
                     </div>
@@ -639,7 +640,7 @@ export function MaskPage() {
                           navigate(Path.Chat);
                         }}
                       />
-                      {m.builtin ? (
+                      {/* {m.builtin ? (
                         <IconButton
                           icon={<EyeIcon />}
                           text={Locale.Mask.Item.View}
@@ -664,13 +665,14 @@ export function MaskPage() {
                             }
                           }}
                         />
-                      )}
+                      )} */}
                     </div>
                   </div>
                 ))}
             </div>
           </div>
         </div>
+        <BottomNav />
       </div>
 
       {editingMask && (

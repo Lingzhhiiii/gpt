@@ -18,6 +18,11 @@ import { IconButton } from "./button";
 import exp from "constants";
 
 import { Box, Paper } from "@mui/material";
+import { Navigate, useNavigate } from "react-router-dom";
+
+import { Path } from "../constant";
+import { useChatStore } from "../store";
+import { Mask, createEmptyMask } from "../store/mask";
 
 export function Popover(props: {
   children: JSX.Element;
@@ -489,6 +494,7 @@ export function Selector<T>(props: {
 }
 
 export function ShowStart() {
+  const navigate = useNavigate();
   const paper = {
     height: 60,
     textAlign: "center",
@@ -498,6 +504,18 @@ export function ShowStart() {
     borderRadius: 0,
     overflow: "auto",
   } as const;
+  const chatStore = useChatStore();
+  const createMask = (message: string) => {
+    const mask: Mask = createEmptyMask();
+    mask.context.push({
+      id: "terminal-0",
+      role: "user",
+      content: message,
+      date: "",
+    });
+    return mask;
+  };
+
   return (
     <>
       <h2 className={styles.title}>ChatGPT Next</h2>
@@ -513,17 +531,44 @@ export function ShowStart() {
         </div>
         <div className={styles.div2}>
           <Paper elevation={0} sx={paper}>
-            写客户商务洽谈会议纪要，详细。
+            <a
+              onClick={() => {
+                chatStore.newSession(
+                  createMask("写客户商务洽谈会议纪要，详细。"),
+                );
+              }}
+            >
+              写客户商务洽谈会议纪要，详细。
+            </a>
+            <a onClick={() => navigate(Path.Masks)}>查看更多</a>
           </Paper>
         </div>
         <div className={styles.div4}>
           <Paper elevation={0} sx={paper}>
-            做去北京旅游的五天详细旅游攻略。
+            <a
+              onClick={() => {
+                chatStore.newSession(
+                  createMask("做去北京旅游的五天详细旅游攻略。"),
+                );
+              }}
+            >
+              做去北京旅游的五天详细旅游攻略。
+            </a>
+            <a onClick={() => navigate(Path.Masks)}>查看更多</a>
           </Paper>
         </div>
         <div className={styles.div6}>
           <Paper elevation={0} sx={paper}>
-            怎么做偏辣口味的炖牛肉？需要详细步骤。
+            <a
+              onClick={() => {
+                chatStore.newSession(
+                  createMask("怎么做偏辣口味的炖牛肉？需要详细步骤。"),
+                );
+              }}
+            >
+              怎么做偏辣口味的炖牛肉？需要详细步骤。
+            </a>
+            <a onClick={() => navigate(Path.Masks)}>查看更多</a>
           </Paper>
         </div>
       </div>
