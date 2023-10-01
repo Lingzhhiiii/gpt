@@ -76,6 +76,10 @@ if (mode !== "export") {
         source: "/sharegpt",
         destination: "https://sharegpt.com/api/conversations",
       },
+      {
+        source: '/api/jwt', 
+        destination: 'http://tools.youren.online/jwt/',
+      },
     ];
 
     return {
