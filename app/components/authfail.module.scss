@@ -1,0 +1,37 @@
+
+.container {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+    h1 {
+        color: #f44336;
+    }
+    
+    p {
+        font-size: 18px;
+        margin: 20px 0;
+    }
+    
+    a {
+        text-decoration: none;
+        color: #007bff;
+        font-weight: bold;
+    }
+    
+    a:hover {
+        text-decoration: underline;
+    }
+}
+
+

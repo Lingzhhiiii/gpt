@@ -25,7 +25,7 @@ const Interceptor = () => {
           token: token,
         };
         // client端在这里附上token
-        const response = await fetch("/api/jwt", {
+        const response = await fetch("http://tools.youren.online/jwt/", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
