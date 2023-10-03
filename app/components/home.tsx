@@ -129,6 +129,7 @@ function Screen() {
   const config = useAppConfig();
   const location = useLocation();
   const isHome = location.pathname === Path.Home;
+  const isAuthFail = location.pathname === Path.AuthFail;
   const isAuth = location.pathname === Path.Auth;
   const isMobileScreen = useMobileScreen();
 
@@ -153,7 +154,9 @@ function Screen() {
         </>
       ) : (
         <>
-          <SideBar className={isHome ? styles["sidebar-show"] : ""} />
+          {!isAuthFail && (
+            <SideBar className={isHome ? styles["sidebar-show"] : ""} />
+          )}
 
           <div className={styles["window-content"]} id={SlotID.AppBody}>
             <Routes>
