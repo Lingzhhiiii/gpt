@@ -6,7 +6,7 @@ import styles from "./mask.module.scss";
 import DownloadIcon from "../icons/download.svg";
 import UploadIcon from "../icons/upload.svg";
 import EditIcon from "../icons/edit.svg";
-import AddIcon from "../icons/add.svg";
+import add from "../icons/add.png";
 import CloseIcon from "../icons/close.svg";
 import DeleteIcon from "../icons/delete.svg";
 import EyeIcon from "../icons/eye.svg";
@@ -61,6 +61,8 @@ import InboxIcon from "@mui/icons-material/Inbox";
 import DraftsIcon from "@mui/icons-material/Drafts";
 import { BottomNav } from "./BottomNav";
 
+import Image from "next/image";
+
 // drag and drop helper function
 function reorder<T>(list: T[], startIndex: number, endIndex: number): T[] {
   const result = [...list];
@@ -76,7 +78,13 @@ export function MaskAvatar(props: { mask: Mask }) {
     <Avatar model={props.mask.modelConfig.model} />
   );
 }
-
+const AddIcon = () => {
+  return (
+    <div>
+      <Image src={add} alt="add" />
+    </div>
+  );
+};
 export function MaskConfig(props: {
   mask: Mask;
   updateMask: Updater<Mask>;
@@ -509,13 +517,20 @@ export function MaskPage() {
         <Li.default
           component="nav"
           aria-label="secondary mailbox folder"
-          sx={{ overflowY: "auto" }}
+          sx={{ overflowY: "auto", p: 0 }}
         >
           {sort.map((item, index: number) => (
             <ListItemButton
               key={index}
               selected={selectedIndex === item.index}
               onClick={() => setSelectedIndex(item.index)}
+              sx={{
+                backgroundColor: "#f8f8f8",
+                "&.Mui-selected": {
+                  backgroundColor: "white",
+                },
+                fontSize: 26,
+              }}
             >
               <ListItemText primary={item.name} />
             </ListItemButton>
@@ -624,17 +639,14 @@ export function MaskPage() {
                       </div>
                       <div className={styles["mask-title"]}>
                         <div className={styles["mask-name"]}>{m.name}</div>
-                        <div className={styles["mask-info"] + " one-line"}>
-                          {/* {`${Locale.Mask.Item.Info(m.context.length)} / ${
-                            ALL_LANG_OPTIONS[m.lang]
-                          } / ${m.modelConfig.model}`} */}
-                        </div>
+                        {/* <div className={styles["mask-info"] + " one-line"}>
+                        </div> */}
                       </div>
                     </div>
                     <div className={styles["mask-actions"]}>
                       <IconButton
                         icon={<AddIcon />}
-                        text={Locale.Mask.Item.Chat}
+                        text=""
                         onClick={() => {
                           chatStore.newSession(m);
                           navigate(Path.Chat);
@@ -672,7 +684,7 @@ export function MaskPage() {
             </div>
           </div>
         </div>
-        <BottomNav />
+        <BottomNav state="mask" />
       </div>
 
       {editingMask && (

@@ -251,7 +251,7 @@
 
 .chat-body-main-title {
   cursor: pointer;
-
+  
   &:hover {
     text-decoration: underline;
   }
@@ -492,7 +492,7 @@
 }
 
 .chat-input-send {
-  background-color: var(--primary);
+  background-color: #1f2027;
   color: white;
 
   position: absolute;

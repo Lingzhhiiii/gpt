@@ -431,7 +431,7 @@ export function ChatActions(props: {
   // switch themes
   const theme = config.theme;
   function nextTheme() {
-    const themes = [Theme.Auto, Theme.Light, Theme.Dark];
+    const themes = [Theme.Light];
     const themeIndex = themes.indexOf(theme);
     const nextIndex = (themeIndex + 1) % themes.length;
     const nextTheme = themes[nextIndex];
@@ -549,7 +549,7 @@ export function ChatActions(props: {
           />
         )}
       </div>
-      <BottomNav />
+      <BottomNav state="chat" />
       {/* */}
     </div>
   );
@@ -1060,6 +1060,18 @@ function _Chat() {
   return (
     <div className={styles.chat} key={session.id}>
       <div className="window-header" data-tauri-drag-region>
+        <div className={`window-header-title ${styles["chat-body-title"]}`}>
+          <div
+            className={`window-header-main-title ${styles["chat-body-main-title"]}`}
+            onClickCapture={() => setIsEditingMessage(true)}
+          >
+            {!session.topic ? DEFAULT_TOPIC : session.topic}
+          </div>
+          <div className="window-header-sub-title">
+            {Locale.Chat.SubTitle(session.messages.length)}
+          </div>
+        </div>
+
         {isMobileScreen && (
           <div className="window-actions">
             <div className={"window-action-button"}>
@@ -1073,18 +1085,7 @@ function _Chat() {
           </div>
         )}
 
-        <div className={`window-header-title ${styles["chat-body-title"]}`}>
-          <div
-            className={`window-header-main-title ${styles["chat-body-main-title"]}`}
-            onClickCapture={() => setIsEditingMessage(true)}
-          >
-            {!session.topic ? DEFAULT_TOPIC : session.topic}
-          </div>
-          <div className="window-header-sub-title">
-            {Locale.Chat.SubTitle(session.messages.length)}
-          </div>
-        </div>
-        <div className="window-actions">
+        {/* <div className="window-actions">
           {!isMobileScreen && (
             <div className="window-action-button">
               <IconButton
@@ -1094,16 +1095,6 @@ function _Chat() {
               />
             </div>
           )}
-          {/* <div className="window-action-button">
-            <IconButton
-              icon={<ExportIcon />}
-              bordered
-              title={Locale.Chat.Actions.Export}
-              onClick={() => {
-                setShowExport(true);
-              }}
-            />
-          </div> */}
           {showMaxIcon && (
             <div className="window-action-button">
               <IconButton
@@ -1117,7 +1108,7 @@ function _Chat() {
               />
             </div>
           )}
-        </div>
+        </div> */}
 
         <PromptToast
           showToast={!hitBottom}

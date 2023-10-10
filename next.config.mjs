@@ -1,4 +1,5 @@
 import webpack from "webpack";
+import withImages from 'next-images';
 
 const mode = process.env.BUILD_MODE ?? "standalone";
 console.log("[Next] build mode", mode);
@@ -14,6 +15,25 @@ const nextConfig = {
       use: ["@svgr/webpack"],
     });
 
+    // config.module.rules.push({
+    //   test: /\.(png|jpg|gif)$/i,
+    //   use: [
+    //     {
+    //       loader: 'file-loader',
+    //       options: {
+    //         name: '[name].[ext]', 
+    //         outputPath: 'images/', 
+    //       },
+    //     },
+    //   ],     
+    // })
+    
+withImages({
+  esModule: true,
+  webpack(config, options) {
+    return config;
+  },
+});
     if (disableChunk) {
       config.plugins.push(
         new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 1 }),

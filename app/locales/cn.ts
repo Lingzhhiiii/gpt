@@ -59,7 +59,7 @@ const cn = {
         dark: "深色模式",
       },
       Prompt: "快捷指令",
-      Masks: "所有面具",
+      Masks: "面具",
       Clear: "清除聊天",
       Settings: "对话",
     },

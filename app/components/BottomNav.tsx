@@ -8,32 +8,16 @@ import React, {
   Fragment,
 } from "react";
 
-import SendWhiteIcon from "../icons/send-white.svg";
-import BrainIcon from "../icons/brain.svg";
-import RenameIcon from "../icons/rename.svg";
-import ExportIcon from "../icons/share.svg";
-import ReturnIcon from "../icons/return.svg";
-import CopyIcon from "../icons/copy.svg";
-import LoadingIcon from "../icons/three-dots.svg";
-import PromptIcon from "../icons/prompt.svg";
-import MaskIcon from "../icons/mask.svg";
-import MaxIcon from "../icons/max.svg";
-import MinIcon from "../icons/min.svg";
-import ResetIcon from "../icons/reload.svg";
+import Image from "next/image";
+import maskIcon1 from "../icons/mask1.png";
+import maskIcon0 from "../icons/mask0.png";
+import clearIcon0 from "../icons/clear0.png";
+import clearIcon1 from "../icons/clear1.png";
+import chatIcon0 from "../icons/chat0.png";
+import chatIcon1 from "../icons/chat1.png";
+
 import BreakIcon from "../icons/break.svg";
 import SettingsIcon from "../icons/chat-settings.svg";
-import DeleteIcon from "../icons/clear.svg";
-import PinIcon from "../icons/pin.svg";
-import EditIcon from "../icons/rename.svg";
-import ConfirmIcon from "../icons/confirm.svg";
-import CancelIcon from "../icons/cancel.svg";
-
-import LightIcon from "../icons/light.svg";
-import DarkIcon from "../icons/dark.svg";
-import AutoIcon from "../icons/auto.svg";
-import BottomIcon from "../icons/bottom.svg";
-import StopIcon from "../icons/pause.svg";
-import RobotIcon from "../icons/robot.svg";
 
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
@@ -78,14 +62,51 @@ import {
 
 import { ChatAction } from "./chat";
 
-export const BottomNav = () => {
+export const BottomNav = (props: { state: string }) => {
   const chatStore = useChatStore();
   const navigate = useNavigate();
 
+  const [selectedValue, setSelectedValue] = useState(props.state); // 初始选中的值
+
+  const MaskIcon = () => {
+    return (
+      <div>
+        <Image
+          src={selectedValue === "mask" ? maskIcon1 : maskIcon0}
+          alt="mask"
+        />
+      </div>
+    );
+  };
+
+  const ChatIcon = () => {
+    return (
+      <div>
+        <Image
+          src={selectedValue === "chat" ? chatIcon1 : chatIcon0}
+          alt="chat"
+        />
+      </div>
+    );
+  };
+
+  const ClearIcon = () => {
+    return (
+      <div>
+        <Image src={clearIcon0} alt="clear" />
+      </div>
+    );
+  };
+
   return (
     <div>
-      <BottomNavigation>
+      <BottomNavigation
+        sx={{
+          height: 100,
+        }}
+      >
         <BottomNavigationAction
+          value="chat"
           icon={
             <ChatAction
               // onClick={props.showPromptModal}
@@ -93,11 +114,12 @@ export const BottomNav = () => {
                 navigate(Path.Chat);
               }}
               text={Locale.Chat.InputActions.Settings}
-              icon={<SettingsIcon />}
+              icon={<ChatIcon />}
             />
           }
         />
         <BottomNavigationAction
+          value="mask"
           icon={
             <ChatAction
               text={Locale.Chat.InputActions.Masks}
@@ -109,10 +131,11 @@ export const BottomNav = () => {
           }
         />
         <BottomNavigationAction
+          value="clear"
           icon={
             <ChatAction
               text={Locale.Chat.InputActions.Clear}
-              icon={<BreakIcon />}
+              icon={<ClearIcon />}
               onClick={() => {
                 chatStore.updateCurrentSession((session) => {
                   if (session.clearContextIndex === session.messages.length) {

@@ -9,7 +9,8 @@ import ConfirmIcon from "../icons/confirm.svg";
 import CancelIcon from "../icons/cancel.svg";
 import MaxIcon from "../icons/max.svg";
 import MinIcon from "../icons/min.svg";
-
+import more from "../icons/more.png";
+import Image from "next/image";
 import Locale from "../locales";
 
 import { createRoot } from "react-dom/client";
@@ -19,6 +20,10 @@ import exp from "constants";
 
 import { Box, Paper } from "@mui/material";
 import { Navigate, useNavigate } from "react-router-dom";
+import * as cd from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
 
 import { Path } from "../constant";
 import { useChatStore } from "../store";
@@ -492,7 +497,13 @@ export function Selector<T>(props: {
     </div>
   );
 }
-
+const MoreIcon = () => {
+  return (
+    <div>
+      <Image src={more} alt="more" />
+    </div>
+  );
+};
 export function ShowStart() {
   const navigate = useNavigate();
   const paper = {
@@ -504,6 +515,22 @@ export function ShowStart() {
     borderRadius: 0,
     overflow: "auto",
   } as const;
+
+  const text = {
+    work: {
+      title: "工作",
+      content: "写客户商务洽谈会议纪要，详细。",
+    },
+    life: {
+      title: "生活",
+      content: "做去北京旅游的五天详细旅游攻略。",
+    },
+    meal: {
+      title: "美食",
+      content: "怎么做偏辣口味的炖牛肉？需要详细步骤。",
+    },
+  };
+
   const chatStore = useChatStore();
   const createMask = (message: string) => {
     const mask: Mask = createEmptyMask();
@@ -518,58 +545,154 @@ export function ShowStart() {
 
   return (
     <>
-      <h2 className={styles.title}>ChatGPT Next</h2>
+      <h2 className={styles.title}>AI智能对话</h2>
       <div className={styles.parent}>
         <div className={styles.div1}>
-          <h4>工作</h4>
-        </div>
-        <div className={styles.div3}>
-          <h4>生活</h4>
-        </div>
-        <div className={styles.div5}>
-          <h4>美食</h4>
+          <cd.default
+            variant="outlined"
+            sx={{
+              height: 180,
+              backgroundColor: "#f8f8f8",
+            }}
+          >
+            <React.Fragment>
+              <CardContent>
+                <Typography sx={{ fontSize: 24 }}>{text.work.title}</Typography>
+                <Typography sx={{ fontSize: "small" }} color="text.secondary">
+                  <a
+                    onClick={() => {
+                      chatStore.newSession(createMask(text.work.content));
+                    }}
+                  >
+                    {text.work.content}
+                  </a>
+                  <br />
+                </Typography>
+                <Box
+                  style={{ display: "flex" }}
+                  sx={{ flexDirection: "row-reverse" }}
+                >
+                  <Typography
+                    variant="body2"
+                    align="right"
+                    sx={{
+                      position: "relative",
+                      mr: 0,
+                      mb: 0,
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    <a onClick={() => navigate(Path.Masks)}>
+                      <div className={styles.parent1}>
+                        <div className={styles.div4}>查看更多</div>
+                        <div className={styles.div5}>
+                          <Image src={more} alt="more" />
+                        </div>
+                      </div>
+                    </a>
+                  </Typography>
+                </Box>
+              </CardContent>
+            </React.Fragment>
+          </cd.default>
         </div>
         <div className={styles.div2}>
-          <Paper elevation={0} sx={paper}>
-            <a
-              onClick={() => {
-                chatStore.newSession(
-                  createMask("写客户商务洽谈会议纪要，详细。"),
-                );
-              }}
-            >
-              写客户商务洽谈会议纪要，详细。
-            </a>
-            <a onClick={() => navigate(Path.Masks)}>查看更多</a>
-          </Paper>
+          <cd.default
+            variant="outlined"
+            sx={{
+              height: 180,
+              backgroundColor: "#f8f8f8",
+            }}
+          >
+            <React.Fragment>
+              <CardContent>
+                <Typography sx={{ fontSize: 24 }}>{text.life.title}</Typography>
+                <Typography sx={{ fontSize: "small" }} color="text.secondary">
+                  <a
+                    onClick={() => {
+                      chatStore.newSession(createMask(text.life.content));
+                    }}
+                  >
+                    {text.life.content}
+                  </a>
+                  <br />
+                </Typography>
+                <Box
+                  style={{ display: "flex" }}
+                  sx={{ flexDirection: "row-reverse" }}
+                >
+                  <Typography
+                    variant="body2"
+                    align="right"
+                    sx={{
+                      position: "relative",
+                      mr: 0,
+                      mb: 0,
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    <a onClick={() => navigate(Path.Masks)}>
+                      <div className={styles.parent1}>
+                        <div className={styles.div4}>查看更多</div>
+                        <div className={styles.div5}>
+                          <Image src={more} alt="more" />
+                        </div>
+                      </div>
+                    </a>
+                  </Typography>
+                </Box>
+              </CardContent>
+            </React.Fragment>
+          </cd.default>
         </div>
-        <div className={styles.div4}>
-          <Paper elevation={0} sx={paper}>
-            <a
-              onClick={() => {
-                chatStore.newSession(
-                  createMask("做去北京旅游的五天详细旅游攻略。"),
-                );
-              }}
-            >
-              做去北京旅游的五天详细旅游攻略。
-            </a>
-            <a onClick={() => navigate(Path.Masks)}>查看更多</a>
-          </Paper>
-        </div>
-        <div className={styles.div6}>
-          <Paper elevation={0} sx={paper}>
-            <a
-              onClick={() => {
-                chatStore.newSession(
-                  createMask("怎么做偏辣口味的炖牛肉？需要详细步骤。"),
-                );
-              }}
-            >
-              怎么做偏辣口味的炖牛肉？需要详细步骤。
-            </a>
-            <a onClick={() => navigate(Path.Masks)}>查看更多</a>
-          </Paper>
+        <div className={styles.div3}>
+          <cd.default
+            variant="outlined"
+            sx={{
+              height: 180,
+              backgroundColor: "#f8f8f8",
+            }}
+          >
+            <React.Fragment>
+              <CardContent>
+                <Typography sx={{ fontSize: 24 }}>{text.meal.title}</Typography>
+                <Typography sx={{ fontSize: "small" }} color="text.secondary">
+                  <a
+                    onClick={() => {
+                      chatStore.newSession(createMask(text.meal.content));
+                    }}
+                  >
+                    {text.meal.content}
+                  </a>
+                  <br />
+                </Typography>
+                <Box
+                  style={{ display: "flex" }}
+                  sx={{ flexDirection: "row-reverse" }}
+                >
+                  <Typography
+                    variant="body2"
+                    align="right"
+                    sx={{
+                      position: "relative",
+                      mr: 0,
+                      mb: 0,
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    <a onClick={() => navigate(Path.Masks)}>
+                      <div className={styles.parent1}>
+                        <div className={styles.div4}>查看更多</div>
+                        <div className={styles.div5}>
+                          <Image src={more} alt="more" />
+                        </div>
+                      </div>
+                    </a>
+                  </Typography>
+                </Box>
+              </CardContent>
+            </React.Fragment>
+          </cd.default>
         </div>
       </div>
     </>
