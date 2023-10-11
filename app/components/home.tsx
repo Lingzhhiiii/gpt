@@ -198,7 +198,7 @@ export function Home() {
   return (
     <ErrorBoundary>
       <Router>
-        {/* <Interceptor /> */}
+        <Interceptor />
         <Screen />
       </Router>
     </ErrorBoundary>
