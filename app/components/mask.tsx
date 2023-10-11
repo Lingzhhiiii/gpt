@@ -62,6 +62,9 @@ import DraftsIcon from "@mui/icons-material/Drafts";
 import { BottomNav } from "./BottomNav";
 
 import Image from "next/image";
+import { ThemeProvider } from "@mui/material";
+import { lightTheme } from "./muiTheme";
+import { createTheme } from "@mui/material";
 
 // drag and drop helper function
 function reorder<T>(list: T[], startIndex: number, endIndex: number): T[] {
@@ -81,7 +84,7 @@ export function MaskAvatar(props: { mask: Mask }) {
 const AddIcon = () => {
   return (
     <div>
-      <Image src={add} alt="add" />
+      <Image src={add} alt="add" height="28" width="28" />
     </div>
   );
 };
@@ -504,39 +507,58 @@ export function MaskPage() {
       },
     ];
 
+    const nightTheme = createTheme({
+      palette: {
+        mode: "dark",
+        primary: {
+          main: "#2196F3",
+        },
+        secondary: {
+          main: "#FF5722",
+        },
+        background: {
+          default: "#121212",
+          paper: "#212121",
+        },
+        text: {
+          primary: "#FFFFFF",
+          secondary: "#B0BEC5",
+        },
+      },
+    });
+
+    const config = useAppConfig();
+
     return (
-      <Box
-        sx={{
-          width: "100%",
-          maxWidth: 360,
-          bgcolor: "background.paper",
-          position: "sticky",
-          top: 0,
-        }}
-      >
-        <Li.default
-          component="nav"
-          aria-label="secondary mailbox folder"
-          sx={{ overflowY: "auto", p: 0 }}
+      <ThemeProvider theme={config.theme === "dark" ? nightTheme : lightTheme}>
+        <Box
+          sx={{
+            width: "100%",
+            maxWidth: 360,
+            position: "sticky",
+            top: 0,
+          }}
         >
-          {sort.map((item, index: number) => (
-            <ListItemButton
-              key={index}
-              selected={selectedIndex === item.index}
-              onClick={() => setSelectedIndex(item.index)}
-              sx={{
-                backgroundColor: "#f8f8f8",
-                "&.Mui-selected": {
-                  backgroundColor: "white",
-                },
-                fontSize: 26,
-              }}
-            >
-              <ListItemText primary={item.name} />
-            </ListItemButton>
-          ))}
-        </Li.default>
-      </Box>
+          <Li.default
+            component="nav"
+            aria-label="secondary mailbox folder"
+            sx={{ overflowY: "auto", p: 0 }}
+          >
+            {sort.map((item, index: number) => (
+              <ListItemButton
+                key={index}
+                selected={selectedIndex === item.index}
+                onClick={() => setSelectedIndex(item.index)}
+                sx={{
+                  fontSize: "small",
+                }}
+              >
+                <ListItemText primary={item.name} />
+              </ListItemButton>
+            ))}
+          </Li.default>
+        </Box>
+      </ThemeProvider>
     );
   };
 

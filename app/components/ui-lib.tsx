@@ -12,6 +12,7 @@ import MinIcon from "../icons/min.svg";
 import more from "../icons/more.png";
 import Image from "next/image";
 import Locale from "../locales";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import { createRoot } from "react-dom/client";
 import React, { HTMLProps, useEffect, useState } from "react";
@@ -26,8 +27,9 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 
 import { Path } from "../constant";
-import { useChatStore } from "../store";
+import { useAppConfig, useChatStore } from "../store";
 import { Mask, createEmptyMask } from "../store/mask";
+import { lightTheme, nightTheme } from "./muiTheme";
 
 export function Popover(props: {
   children: JSX.Element;
@@ -500,7 +502,7 @@ export function Selector<T>(props: {
 const MoreIcon = () => {
   return (
     <div>
-      <Image src={more} alt="more" />
+      <Image src={more} alt="more" width="20" height="20" />
     </div>
   );
 };
@@ -543,157 +545,181 @@ export function ShowStart() {
     return mask;
   };
 
+  const config = useAppConfig();
+
   return (
     <>
       <h2 className={styles.title}>AI智能对话</h2>
       <div className={styles.parent}>
-        <div className={styles.div1}>
-          <cd.default
-            variant="outlined"
-            sx={{
-              height: 180,
-              backgroundColor: "#f8f8f8",
-            }}
-          >
-            <React.Fragment>
-              <CardContent>
-                <Typography sx={{ fontSize: 24 }}>{text.work.title}</Typography>
-                <Typography sx={{ fontSize: "small" }} color="text.secondary">
-                  <a
-                    onClick={() => {
-                      chatStore.newSession(createMask(text.work.content));
-                    }}
-                  >
-                    {text.work.content}
-                  </a>
-                  <br />
-                </Typography>
-                <Box
-                  style={{ display: "flex" }}
-                  sx={{ flexDirection: "row-reverse" }}
-                >
-                  <Typography
-                    variant="body2"
-                    align="right"
-                    sx={{
-                      position: "relative",
-                      mr: 0,
-                      mb: 0,
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    <a onClick={() => navigate(Path.Masks)}>
-                      <div className={styles.parent1}>
-                        <div className={styles.div4}>查看更多</div>
-                        <div className={styles.div5}>
-                          <Image src={more} alt="more" />
-                        </div>
-                      </div>
-                    </a>
+        <ThemeProvider
+          theme={config.theme === "dark" ? nightTheme : lightTheme}
+        >
+          <div className={styles.div1}>
+            <cd.default
+              variant="outlined"
+              sx={{
+                height: 180,
+              }}
+            >
+              <React.Fragment>
+                <CardContent>
+                  <Typography sx={{ fontSize: 24 }}>
+                    {text.work.title}
                   </Typography>
-                </Box>
-              </CardContent>
-            </React.Fragment>
-          </cd.default>
-        </div>
-        <div className={styles.div2}>
-          <cd.default
-            variant="outlined"
-            sx={{
-              height: 180,
-              backgroundColor: "#f8f8f8",
-            }}
-          >
-            <React.Fragment>
-              <CardContent>
-                <Typography sx={{ fontSize: 24 }}>{text.life.title}</Typography>
-                <Typography sx={{ fontSize: "small" }} color="text.secondary">
-                  <a
-                    onClick={() => {
-                      chatStore.newSession(createMask(text.life.content));
-                    }}
-                  >
-                    {text.life.content}
-                  </a>
-                  <br />
-                </Typography>
-                <Box
-                  style={{ display: "flex" }}
-                  sx={{ flexDirection: "row-reverse" }}
-                >
-                  <Typography
-                    variant="body2"
-                    align="right"
-                    sx={{
-                      position: "relative",
-                      mr: 0,
-                      mb: 0,
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    <a onClick={() => navigate(Path.Masks)}>
-                      <div className={styles.parent1}>
-                        <div className={styles.div4}>查看更多</div>
-                        <div className={styles.div5}>
-                          <Image src={more} alt="more" />
-                        </div>
-                      </div>
+                  <Typography sx={{ fontSize: "small" }} color="text.secondary">
+                    <a
+                      onClick={() => {
+                        chatStore.newSession(createMask(text.work.content));
+                      }}
+                    >
+                      {text.work.content}
                     </a>
+                    <br />
                   </Typography>
-                </Box>
-              </CardContent>
-            </React.Fragment>
-          </cd.default>
-        </div>
-        <div className={styles.div3}>
-          <cd.default
-            variant="outlined"
-            sx={{
-              height: 180,
-              backgroundColor: "#f8f8f8",
-            }}
-          >
-            <React.Fragment>
-              <CardContent>
-                <Typography sx={{ fontSize: 24 }}>{text.meal.title}</Typography>
-                <Typography sx={{ fontSize: "small" }} color="text.secondary">
-                  <a
-                    onClick={() => {
-                      chatStore.newSession(createMask(text.meal.content));
-                    }}
+                  <Box
+                    style={{ display: "flex" }}
+                    sx={{ flexDirection: "row-reverse" }}
                   >
-                    {text.meal.content}
-                  </a>
-                  <br />
-                </Typography>
-                <Box
-                  style={{ display: "flex" }}
-                  sx={{ flexDirection: "row-reverse" }}
-                >
-                  <Typography
-                    variant="body2"
-                    align="right"
-                    sx={{
-                      position: "relative",
-                      mr: 0,
-                      mb: 0,
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    <a onClick={() => navigate(Path.Masks)}>
-                      <div className={styles.parent1}>
-                        <div className={styles.div4}>查看更多</div>
-                        <div className={styles.div5}>
-                          <Image src={more} alt="more" />
+                    <Typography
+                      variant="body2"
+                      align="right"
+                      sx={{
+                        position: "relative",
+                        mr: 0,
+                        mb: 0,
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      <a onClick={() => navigate(Path.Masks)}>
+                        <div className={styles.parent1}>
+                          <div className={styles.div4}>查看更多</div>
+                          <div className={styles.div5}>
+                            <Image
+                              src={more}
+                              alt="more"
+                              width="20"
+                              height="20"
+                            />
+                          </div>
                         </div>
-                      </div>
-                    </a>
+                      </a>
+                    </Typography>
+                  </Box>
+                </CardContent>
+              </React.Fragment>
+            </cd.default>
+          </div>
+          <div className={styles.div2}>
+            <cd.default
+              variant="outlined"
+              sx={{
+                height: 180,
+              }}
+            >
+              <React.Fragment>
+                <CardContent>
+                  <Typography sx={{ fontSize: 24 }}>
+                    {text.life.title}
                   </Typography>
-                </Box>
-              </CardContent>
-            </React.Fragment>
-          </cd.default>
-        </div>
+                  <Typography sx={{ fontSize: "small" }} color="text.secondary">
+                    <a
+                      onClick={() => {
+                        chatStore.newSession(createMask(text.life.content));
+                      }}
+                    >
+                      {text.life.content}
+                    </a>
+                    <br />
+                  </Typography>
+                  <Box
+                    style={{ display: "flex" }}
+                    sx={{ flexDirection: "row-reverse" }}
+                  >
+                    <Typography
+                      variant="body2"
+                      align="right"
+                      sx={{
+                        position: "relative",
+                        mr: 0,
+                        mb: 0,
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      <a onClick={() => navigate(Path.Masks)}>
+                        <div className={styles.parent1}>
+                          <div className={styles.div4}>查看更多</div>
+                          <div className={styles.div5}>
+                            <Image
+                              src={more}
+                              alt="more"
+                              width="20"
+                              height="20"
+                            />
+                          </div>
+                        </div>
+                      </a>
+                    </Typography>
+                  </Box>
+                </CardContent>
+              </React.Fragment>
+            </cd.default>
+          </div>
+          <div className={styles.div3}>
+            <cd.default
+              variant="outlined"
+              sx={{
+                height: 180,
+              }}
+            >
+              <React.Fragment>
+                <CardContent>
+                  <Typography sx={{ fontSize: 24 }}>
+                    {text.meal.title}
+                  </Typography>
+                  <Typography sx={{ fontSize: "small" }} color="text.secondary">
+                    <a
+                      onClick={() => {
+                        chatStore.newSession(createMask(text.meal.content));
+                      }}
+                    >
+                      {text.meal.content}
+                    </a>
+                    <br />
+                  </Typography>
+                  <Box
+                    style={{ display: "flex" }}
+                    sx={{ flexDirection: "row-reverse" }}
+                  >
+                    <Typography
+                      variant="body2"
+                      align="right"
+                      sx={{
+                        position: "relative",
+                        mr: 0,
+                        mb: 0,
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      <a onClick={() => navigate(Path.Masks)}>
+                        <div className={styles.parent1}>
+                          <div className={styles.div4}>查看更多</div>
+                          <div className={styles.div5}>
+                            <Image
+                              src={more}
+                              alt="more"
+                              width="20"
+                              height="20"
+                            />
+                          </div>
+                        </div>
+                      </a>
+                    </Typography>
+                  </Box>
+                </CardContent>
+              </React.Fragment>
+            </cd.default>
+          </div>
+        </ThemeProvider>
       </div>
     </>
   );

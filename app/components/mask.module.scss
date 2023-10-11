@@ -8,7 +8,7 @@
   .mask-page-body {
     padding: 20px;
     overflow-y: auto;
-    background-color: #f8f8f8;
+    // background-color: #f8f8f8;
     .mask-filter {
       width: 100%;
       max-width: 100%;
@@ -34,7 +34,7 @@
         height: 100%;
         margin-left: 10px;
         box-sizing: border-box;
-        background-color: #f8f8f8;
+        // background-color: #f8f8f8;
         min-width: 80px;
       }
     }
@@ -44,7 +44,7 @@
       padding: 20px;
       border: var(--border-in-light);
       animation: slide-in ease 0.3s;
-      background-color: white;
+      // background-color: white;
       &:not(:last-child) {
         border-bottom: 0;
       }

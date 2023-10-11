@@ -7,7 +7,7 @@ import React, {
   useCallback,
   Fragment,
 } from "react";
-
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Image from "next/image";
 import maskIcon1 from "../icons/mask1.png";
 import maskIcon0 from "../icons/mask0.png";
@@ -61,6 +61,7 @@ import {
 } from "../constant";
 
 import { ChatAction } from "./chat";
+import { nightTheme, lightTheme } from "./muiTheme";
 
 export const BottomNav = (props: { state: string }) => {
   const chatStore = useChatStore();
@@ -68,12 +69,20 @@ export const BottomNav = (props: { state: string }) => {
 
   const [selectedValue, setSelectedValue] = useState(props.state); // 初始选中的值
 
+  const config = useAppConfig();
+
   const MaskIcon = () => {
     return (
       <div>
         <Image
-          src={selectedValue === "mask" ? maskIcon1 : maskIcon0}
+          src={
+            selectedValue === "mask" && config.theme !== "dark"
+              ? maskIcon1
+              : maskIcon0
+          }
           alt="mask"
+          height="22"
+          width="22"
         />
       </div>
     );
@@ -83,7 +92,13 @@ export const BottomNav = (props: { state: string }) => {
     return (
       <div>
         <Image
-          src={selectedValue === "chat" ? chatIcon1 : chatIcon0}
+          src={
+            selectedValue === "chat" && config.theme !== "dark"
+              ? chatIcon1
+              : chatIcon0
+          }
+          height="22"
+          width="22"
           alt="chat"
         />
       </div>
@@ -93,63 +108,61 @@ export const BottomNav = (props: { state: string }) => {
   const ClearIcon = () => {
     return (
       <div>
-        <Image src={clearIcon0} alt="clear" />
+        <Image src={clearIcon0} alt="clear" height="22" width="22" />
       </div>
     );
   };
 
   return (
     <div>
-      <BottomNavigation
-        sx={{
-          height: 100,
-        }}
-      >
-        <BottomNavigationAction
-          value="chat"
-          icon={
-            <ChatAction
-              // onClick={props.showPromptModal}
-              onClick={() => {
-                navigate(Path.Chat);
-              }}
-              text={Locale.Chat.InputActions.Settings}
-              icon={<ChatIcon />}
-            />
-          }
-        />
-        <BottomNavigationAction
-          value="mask"
-          icon={
-            <ChatAction
-              text={Locale.Chat.InputActions.Masks}
-              icon={<MaskIcon />}
-              onClick={() => {
-                navigate(Path.Masks);
-              }}
-            />
-          }
-        />
-        <BottomNavigationAction
-          value="clear"
-          icon={
-            <ChatAction
-              text={Locale.Chat.InputActions.Clear}
-              icon={<ClearIcon />}
-              onClick={() => {
-                chatStore.updateCurrentSession((session) => {
-                  if (session.clearContextIndex === session.messages.length) {
-                    session.clearContextIndex = undefined;
-                  } else {
-                    session.clearContextIndex = session.messages.length;
-                    session.memoryPrompt = ""; // will clear memory
-                  }
-                });
-              }}
-            />
-          }
-        />
-      </BottomNavigation>
+      <ThemeProvider theme={config.theme === "dark" ? nightTheme : lightTheme}>
+        <BottomNavigation>
+          <BottomNavigationAction
+            value="chat"
+            icon={
+              <ChatAction
+                // onClick={props.showPromptModal}
+                onClick={() => {
+                  navigate(Path.Chat);
+                }}
+                text={Locale.Chat.InputActions.Settings}
+                icon={<ChatIcon />}
+              />
+            }
+          />
+          <BottomNavigationAction
+            value="mask"
+            icon={
+              <ChatAction
+                text={Locale.Chat.InputActions.Masks}
+                icon={<MaskIcon />}
+                onClick={() => {
+                  navigate(Path.Masks);
+                }}
+              />
+            }
+          />
+          <BottomNavigationAction
+            value="clear"
+            icon={
+              <ChatAction
+                text={Locale.Chat.InputActions.Clear}
+                icon={<ClearIcon />}
+                onClick={() => {
+                  chatStore.updateCurrentSession((session) => {
+                    if (session.clearContextIndex === session.messages.length) {
+                      session.clearContextIndex = undefined;
+                    } else {
+                      session.clearContextIndex = session.messages.length;
+                      session.memoryPrompt = ""; // will clear memory
+                    }
+                  });
+                }}
+              />
+            }
+          />
+        </BottomNavigation>
+      </ThemeProvider>
     </div>
   );
 };

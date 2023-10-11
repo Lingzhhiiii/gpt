@@ -199,8 +199,9 @@
   top: 0;
   right: 0;
   transition: all ease 0.3s;
-  opacity: 0;
   cursor: pointer;
+  opacity: 1;
+  transform: translateX(-4px);
 }
 
 .chat-item:hover > .chat-item-delete {
